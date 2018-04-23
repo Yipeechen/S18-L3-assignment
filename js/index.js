@@ -74,6 +74,13 @@ class Hero extends BaseCharacter{
     super.getHurt(damage);
     this.updateHtml(this.hpElement, this.hurtElement);
   }
+  heal() {
+    this.hp += 30;
+    if (this.hp > this.maxHp) {
+      this.hp = this.maxHp;
+    }
+    this.updateHtml(this.hpElement, this.hurtElement);
+  }
 }
 
 class Monster extends BaseCharacter{
@@ -133,6 +140,29 @@ function heroAttack() {
   }, 1100);
 }
 
+function heroHeal() {
+  document.getElementsByClassName("skill-block")[0].style.display = "none";
+  hero.heal();
+  //輪到怪物攻擊
+  setTimeout(function(){
+    if (monster.alive) {
+      monster.element.classList.add("attacking");
+      setTimeout(function(){
+        monster.attack(hero);
+        monster.element.classList.remove("attacking");
+        endTurn();
+        if (hero.alive == false) {
+          finish();
+        } else {
+          document.getElementsByClassName("skill-block")[0].style.display = "block";
+        }
+      }, 500);
+    } else {
+      finish();
+    }
+  }, 1100);
+}
+
 function finish() {
   var dialog = document.getElementById("dialog");
   dialog.style.display = "block";
@@ -150,6 +180,14 @@ function addSkillEvent() {
   }
 }
 addSkillEvent();  //設定事件驅動
+
+function addHealEvent() {
+  var heal = document.getElementById("heal");
+  heal.onclick = function() {
+    heroHeal();
+  }
+}
+addHealEvent();  //設定事件驅動
 
 var rounds = 10;
 function endTurn(){
