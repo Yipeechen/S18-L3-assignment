@@ -80,6 +80,16 @@ class Hero extends BaseCharacter{
       this.hp = this.maxHp;
     }
     this.updateHtml(this.hpElement, this.hurtElement);
+    setTimeout(function() {
+      document.getElementsByClassName("hurt-text")[0].classList.add("attacked");
+      document.getElementsByClassName("hurt-text")[0].textContent = 30;
+      document.getElementsByClassName("hurt-text")[0].style.color = "green";
+    }, 200);
+
+    setTimeout(function() {
+      document.getElementsByClassName("hurt-text")[0].textContent = "";
+      document.getElementsByClassName("hurt-text")[0].style.color = "red";
+    }, 700);
   }
 }
 
