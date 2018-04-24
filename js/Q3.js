@@ -80,16 +80,25 @@ class Hero extends BaseCharacter{
       this.hp = this.maxHp;
     }
     this.updateHtml(this.hpElement, this.hurtElement);
-    setTimeout(function() {
-      document.getElementsByClassName("hurt-text")[0].classList.add("attacked");
-      document.getElementsByClassName("hurt-text")[0].textContent = 30;
-      document.getElementsByClassName("hurt-text")[0].style.color = "green";
-    }, 200);
 
-    setTimeout(function() {
-      document.getElementsByClassName("hurt-text")[0].textContent = "";
-      document.getElementsByClassName("hurt-text")[0].style.color = "red";
-    }, 700);
+    var i = 1;
+    hero.id = setInterval(function(){
+      if (i == 1) {
+        document.getElementsByClassName("effect-image")[0].style.display = "block";
+        document.getElementsByClassName("hurt-text")[0].classList.add("attacked");
+        document.getElementsByClassName("hurt-text")[0].textContent = 30;
+        document.getElementsByClassName("hurt-text")[0].style.color = "green";
+      }
+      document.getElementsByClassName("effect-image")[0].src = "images/effect/heal/" + i + ".png";
+      i++;
+
+      if (i > 8) {
+        document.getElementsByClassName("effect-image")[0].style.display = "none";
+        document.getElementsByClassName("hurt-text")[0].textContent = "";
+        document.getElementsByClassName("hurt-text")[0].style.color = "red";
+        clearInterval(hero.id);
+      }
+    }, 50);
   }
 }
 
