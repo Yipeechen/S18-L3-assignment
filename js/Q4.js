@@ -139,6 +139,7 @@ function heroAttack() {
       hero.element.classList.remove("attacking");
     }, 500);
   }, 100);
+  console.log("英雄 " + hero.name + "進行攻擊！");
 // 輪到怪物攻擊
   setTimeout(function(){
     if (monster.alive) {
@@ -157,11 +158,13 @@ function heroAttack() {
       finish();
     }
   }, 1100);
+  console.log("怪獸 " + monster.name + "進行攻擊！");
 }
 
 function heroHeal() {
   document.getElementsByClassName("skill-block")[0].style.display = "none";
   hero.heal();
+  console.log("英雄 " + hero.name + "使用治癒功能！");
   //輪到怪物攻擊
   setTimeout(function(){
     if (monster.alive) {
@@ -180,6 +183,7 @@ function heroHeal() {
       finish();
     }
   }, 1100);
+  console.log("怪獸 " + monster.name + "進行攻擊！");
 }
 
 function finish() {
@@ -215,4 +219,15 @@ function endTurn(){
   if (rounds < 1) {
     finish();
   }
+}
+
+document.onkeyup = function(event) {
+    var key = String.fromCharCode(event.keyCode);
+    if (key == "A") {
+      heroAttack();
+    } else if (key == "D") {
+      heroHeal();
+    } else {
+      alert("無此功能按鍵！");
+    }
 }
